@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.tvlimit.app-mergeDebugResources-54:/values-v23/values-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ATI-User\\.gradle\\caches\\8.9\\transforms\\72ff0b3512d8929eb59dd5ad2c08de4f\\transformed\\work-runtime-2.9.1\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,121",
+                        "endColumns": "65,62",
+                        "endOffsets": "116,179"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+option java_package = "com.example.tvlimit.proto";
+option java_multiple_files = true;
+
+message Quota {
+  string packageName = 1;
+  int32 minutes = 2;
+}
+
+message Settings {
+  repeated Quota quotas = 1;
+  repeated string blocked = 2;
+  string pin_hash = 3;
+  string pin_salt = 4;
+  int64 last_reset_epoch_day = 5;
+}
