@@ -29,7 +29,8 @@ class QuotaEnforcerWorker(appContext: Context, params: WorkerParameters) :
                     .build()
             }
             if (DeviceOwner.isDeviceOwner(context)) {
-                DeviceOwner.setPackageEnabled(context, exceeded.toList(), false)
+//                DeviceOwner.setPackageEnabled(context, exceeded.toList(), false)
+                DeviceOwner.setPackagesBlocked(context, exceeded, true)
             }
         }
         return Result.success()

@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
                                     settings = settings,
                                     onToggleBlock = { pkg, on ->
                                         scope.launch {
+                                            // 1) Persist UI state
                                             AppState.update { cur ->
                                                 val builder = cur.toBuilder().clearBlocked()
                                                 val current = cur.blockedList.toMutableSet()
@@ -60,6 +61,13 @@ class MainActivity : ComponentActivity() {
                                                 builder.addAllBlocked(current.distinct())
                                                 builder.build()
                                             }
+
+                                            // 2) Try to hard-block at the system level right away
+                                            val hard = DeviceOwner.setPackageBlocked(context, pkg, on)
+
+                                            // 3) If not hard-blocked, ensure Accessibility soft-block is your safety net
+                                            //    (No code needed here—your SoftBlockService already handles it,
+                                            //     but remind the user to enable the accessibility service.)
                                         }
                                     },
                                     onSetQuota = { pkg, minutes ->
