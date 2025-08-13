@@ -1,7 +1,9 @@
+@file:OptIn(
+    androidx.tv.material3.ExperimentalTvMaterial3Api::class,
+    androidx.tv.foundation.ExperimentalTvFoundationApi::class
+)
 package com.example.tvlimit
 
-import android.content.Intent
-import android.provider.Settings
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,9 +15,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.tv.foundation.lazy.grid.TvGridCells
 import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
+import androidx.tv.foundation.lazy.grid.items   // <-- ensure this is present
 import androidx.tv.material3.Card
-import kotlinx.coroutines.launch
-import com.example.tvlimit.proto.*
+// Removed wildcard; explicitly alias proto Settings
+import com.example.tvlimit.proto.Settings as ProtoSettings
 
 @Composable
 fun TvLauncherScreen(
@@ -73,8 +76,10 @@ fun PinGate(pinHash: String?, pinSalt: String?, content: @Composable () -> Unit)
             )
             Spacer(Modifier.height(12.dp))
             Button(onClick = {
-                val hashed = Security.hashPin(input, pinSalt!!)
-                if (hashed == pinHash) unlocked = true
+                // avoid NPE if salt is missing
+                val ok = !pinHash.isNullOrEmpty() && !pinSalt.isNullOrEmpty()
+                        && Security.hashPin(input, pinSalt!!) == pinHash
+                if (ok) unlocked = true
             }) { Text("Unlock") }
         }
     }
@@ -82,14 +87,13 @@ fun PinGate(pinHash: String?, pinSalt: String?, content: @Composable () -> Unit)
 
 @Composable
 fun SettingsScreen(
-    settings: Settings,
+    settings: ProtoSettings,   // <-- use proto Settings
     onToggleBlock: (String, Boolean) -> Unit,
     onSetQuota: (String, Int) -> Unit,
     onSetPin: (String) -> Unit,
     onRequestUsageAccess: () -> Unit,
     apps: List<AppInfo>
 ) {
-    val scope = rememberCoroutineScope()
     var pin by remember { mutableStateOf("") }
     var selected by remember { mutableStateOf<String?>(null) }
     var minutes by remember { mutableStateOf("") }
@@ -121,9 +125,10 @@ fun SettingsScreen(
                         Text(app.label)
                         Text(app.packageName, style = MaterialTheme.typography.bodySmall)
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(checked = isBlocked, onCheckedChange = {
-                                onToggleBlock(app.packageName, it)
-                            })
+                            Checkbox(
+                                checked = isBlocked,
+                                onCheckedChange = { onToggleBlock(app.packageName, it) }
+                            )
                             Text(if (isBlocked) "Blocked" else "Shown")
                         }
                     }
@@ -146,14 +151,20 @@ fun SettingsScreen(
                 onSetQuota(pkg, min)
             }) { Text("Save quota for selected") }
             Spacer(Modifier.width(12.dp))
-            Text("Current quotas: " + settings.quotasList.joinToString { "${it.packageName}=${it.minutes}m" },
-                style = MaterialTheme.typography.bodySmall)
+            Text(
+                "Current quotas: " + settings.quotasList.joinToString { "${it.packageName}=${it.minutes}m" },
+                style = MaterialTheme.typography.bodySmall
+            )
         }
 
         Spacer(Modifier.height(16.dp))
         Text("Set/Change PIN", style = MaterialTheme.typography.titleMedium)
         Row(verticalAlignment = Alignment.CenterVertically) {
-            OutlinedTextField(value = pin, onValueChange = { pin = it.filter { c -> c.isDigit() } }, label = { Text("PIN") })
+            OutlinedTextField(
+                value = pin,
+                onValueChange = { pin = it.filter { c -> c.isDigit() } },
+                label = { Text("PIN") }
+            )
             Spacer(Modifier.width(8.dp))
             Button(onClick = { onSetPin(pin) }) { Text("Save PIN") }
         }

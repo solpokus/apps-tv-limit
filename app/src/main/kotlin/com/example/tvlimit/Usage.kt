@@ -5,7 +5,6 @@ import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.os.Process
-import android.provider.Settings
 import java.util.Calendar
 
 object Usage {
@@ -46,7 +45,6 @@ object Usage {
                 }
             }
         }
-        // If something is still in foreground at query end, add tail
         val now = end
         lastResume.forEach { (pkg, s) ->
             result[pkg] = (result[pkg] ?: 0L) + (now - s)

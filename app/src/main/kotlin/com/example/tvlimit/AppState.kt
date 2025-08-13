@@ -27,7 +27,6 @@ object AppState {
 
     suspend fun update(transform: (Settings) -> Settings) {
         appContext.settingsStore.updateData(transform)
-        // Fire quick enforcement pass
         QuotaEnforcerWorker.enqueueNow(appContext)
     }
 }

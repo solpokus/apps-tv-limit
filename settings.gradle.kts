@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "apps-tv-limit"
+rootProject.name = "apps-tv-limit-proto-fixed"
 include(":app")

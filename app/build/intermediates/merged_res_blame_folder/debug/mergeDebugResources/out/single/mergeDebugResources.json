@@ -1,14 +1,18 @@
 [
     {
-        "merged": "com.example.tvlimit.app-debug-56:/xml_device_admin.xml.flat",
-        "source": "com.example.tvlimit.app-main-58:/xml/device_admin.xml"
+        "merged": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-debug-56:\\xml_accessibility_config.xml.flat",
+        "source": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-main-58:\\xml\\accessibility_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-debug-56:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-main-58:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-debug-56:\\xml_device_admin.xml.flat",
+        "source": "C:\\Users\\ATI-User\\.gradle\\daemon\\8.9\\com.example.tvlimit.app-main-58:\\xml\\device_admin.xml"
     },
     {
         "merged": "com.example.tvlimit.app-debug-56:/xml_accessibility_config.xml.flat",
         "source": "com.example.tvlimit.app-main-58:/xml/accessibility_config.xml"
-    },
-    {
-        "merged": "com.example.tvlimit.app-debug-56:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.tvlimit.app-main-58:/mipmap-anydpi-v26/ic_launcher.xml"
     }
 ]

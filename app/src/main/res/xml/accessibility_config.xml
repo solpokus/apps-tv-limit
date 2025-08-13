@@ -4,5 +4,5 @@
     android:canRetrieveWindowContent="false"
     android:notificationTimeout="100"
     android:accessibilityFlags="flagIncludeNotImportantViews"
-    android:description="Blocks specified apps by returning to TV Limit"
+    android:description="@string/accessibility_service_description"
     android:settingsActivity="" />

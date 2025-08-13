@@ -2,7 +2,6 @@ package com.example.tvlimit
 
 import android.content.Context
 import androidx.work.*
-import com.example.tvlimit.proto.Settings
 import kotlinx.coroutines.flow.first
 
 class QuotaEnforcerWorker(appContext: Context, params: WorkerParameters) :
@@ -39,7 +38,6 @@ class QuotaEnforcerWorker(appContext: Context, params: WorkerParameters) :
     companion object {
         fun enqueueNow(context: Context) {
             val once = OneTimeWorkRequestBuilder<QuotaEnforcerWorker>()
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORKER)
                 .build()
             WorkManager.getInstance(context).enqueue(once)
         }
