@@ -48,7 +48,22 @@ class MainActivity : ComponentActivity() {
                                 allApps = allApps
                             )
                         } else {
-                            PinGate(settings.pinHash, settings.pinSalt) {
+                            PinGate(
+                                pinHash = settings.pinHash,
+                                pinSalt = settings.pinSalt,
+                                onSetPin = { newPin ->
+                                    scope.launch {
+                                        val salt = Security.randomSalt()
+                                        val hash = Security.hashPin(newPin, salt)
+                                        AppState.update { cur ->
+                                            cur.toBuilder()
+                                                .setPinSalt(salt)
+                                                .setPinHash(hash)
+                                                .build()
+                                        }
+                                    }
+                                }
+                            ) {
                                 SettingsScreenTv(
                                     settings = settings,
                                     onToggleBlock = { pkg, on ->
@@ -87,7 +102,7 @@ class MainActivity : ComponentActivity() {
                                             }
                                         }
                                     },
-                                    onSetPin = { newPin ->
+                                    /*onSetPin = { newPin ->
                                         scope.launch {
                                             val salt = Security.randomSalt()
                                             val hash = Security.hashPin(newPin, salt)
@@ -98,7 +113,8 @@ class MainActivity : ComponentActivity() {
                                                     .build()
                                             }
                                         }
-                                    },
+                                    },*/
+                                    onSetPin = {/* not used anymore from SettingsScreen; can be no-op */},
                                     onRequestUsageAccess = {
                                         // ✅ Uses AndroidSettings alias to avoid proto.Settings clash
                                         startActivity(
