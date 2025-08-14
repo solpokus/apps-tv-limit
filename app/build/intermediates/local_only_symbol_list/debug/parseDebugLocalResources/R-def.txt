@@ -3,6 +3,7 @@ local
 drawable home_hero
 drawable ic_launcher_background
 drawable settings_hero
+drawable tv_banner
 mipmap ic_launcher
 mipmap ic_launcher_foreground
 string accessibility_service_description
