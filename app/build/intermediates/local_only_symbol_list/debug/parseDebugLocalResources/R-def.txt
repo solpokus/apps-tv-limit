@@ -1,6 +1,10 @@
 R_DEF: Internal format may change without notice
 local
+drawable home_hero
+drawable ic_launcher_background
+drawable settings_hero
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 string accessibility_service_description
 string app_name
 xml accessibility_config
